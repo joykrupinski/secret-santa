@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b1430">
+  <title>Wichteln für Joy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="moon"></div>
+    <div class="sleigh">🛷<span>🦌🦌</span></div>
+  </div>
+  <canvas id="snow" aria-hidden="true"></canvas>
+  <div class="landscape" aria-hidden="true">
+    <svg viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice">
+      <path d="M0 150 Q 200 90 400 140 T 800 130 T 1200 120 V220 H0Z" fill="#c9d6f2" opacity=".35"/>
+      <g fill="#123a2a">
+        <path d="M90 160 l30 -70 l30 70z M100 130 l20 -50 l20 50z"/>
+        <path d="M1010 150 l36 -86 l36 86z M1022 115 l24 -60 l24 60z"/>
+        <path d="M1110 165 l24 -56 l24 56z"/>
+        <path d="M20 175 l22 -50 l22 50z"/>
+      </g>
+      <g>
+        <rect x="860" y="128" width="70" height="46" fill="#5a2b1c"/>
+        <path d="M850 132 l45 -38 l45 38z" fill="#f4f7ff"/>
+        <rect x="878" y="142" width="14" height="14" fill="#ffd66b"/>
+        <rect x="902" y="142" width="14" height="14" fill="#ffd66b"/>
+      </g>
+      <path d="M0 180 Q 300 140 600 175 T 1200 165 V220 H0Z" fill="#eef3ff"/>
+    </svg>
+  </div>
+
+  <button type="button" class="sound-toggle" id="sound" aria-pressed="true">🔔 Ton an</button>
+
+  <main class="card">
+    <p class="eyebrow">Familien-Wichteln 2026</p>
+    <h1>Hallo Joy! <span aria-hidden="true">🎄</span></h1>
+    <p class="lead" id="lead">Der Weihnachtsmann hat ein Geschenk nur für dich dagelassen.<br>Darin steht, wen <strong>du</strong> dieses Jahr beschenkst!</p>
+
+    <div class="stage">
+      <div class="glow" aria-hidden="true"></div>
+      <button class="gift" id="gift" type="button" aria-label="Geschenk schütteln und öffnen">
+        <span class="lid"><span class="bow"></span></span>
+        <span class="box"></span>
+        <span class="tag">für Joy</span>
+      </button>
+
+      <div class="reveal" id="reveal" hidden aria-live="polite">
+        <p class="reveal-label">Du beschenkst</p>
+        <p class="reveal-name" id="revealName"></p>
+        <p class="reveal-sub">Ho ho ho – viel Spaß beim Aussuchen! <span aria-hidden="true">🎅</span></p>
+      </div>
+    </div>
+
+    <div class="confirm" id="confirm" hidden>
+      <p>Moment! Bist du wirklich <strong>Joy</strong>? <span aria-hidden="true">🧐</span></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn btn-primary" id="confirmYes">Ja, ich bin's!</button>
+        <button type="button" class="btn btn-ghost" id="confirmNo">Ups, nein</button>
+      </div>
+    </div>
+
+    <p class="hint" id="hint">Tippe auf das Geschenk, um es zu schütteln! <span aria-hidden="true">👆</span></p>
+    <p class="mission" id="mission" hidden></p>
+    <p class="error" id="error" hidden></p>
+
+    <div class="countdown" id="countdown" aria-live="off"></div>
+
+    <ul class="infos">
+          <li><span aria-hidden="true">📅</span> Bescherung: <strong>24. Dezember 2026</strong></li>
+          <li><span aria-hidden="true">🤫</span> Pssst – nicht verraten, wen du hast!</li>
+    </ul>
+  </main>
+
+  <footer class="footer">Frohe Weihnachten! <span aria-hidden="true">✨🎄✨</span></footer>
+
+  <script>
+    window.WICHTEL = { giver: "Joy", nonce: "nzMXujPqB3OkJmAg", cipher: "386ZKmPR02LlQlVCAqQ=" };
+  </script>
+  <script src="../assets/snow.js"></script>
+  <script src="../assets/countdown.js"></script>
+  <script src="../assets/reveal.js"></script>
+</body>
+</html>
