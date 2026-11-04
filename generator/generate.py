@@ -103,7 +103,8 @@ def main() -> None:
         key = secrets.token_bytes(16)
         nonce_b64, cipher_b64 = encrypt(assignment[giver], key)
         page = (
-            template.replace("{{GIVER}}", html.escape(giver))
+            template.replace("{{BASE}}", html.escape(base_url))
+            .replace("{{GIVER}}", html.escape(giver))
             .replace("{{GIVER_JS}}", json.dumps(giver))
             .replace("{{NONCE}}", nonce_b64)
             .replace("{{CIPHER}}", cipher_b64)
