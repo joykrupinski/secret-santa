@@ -29,7 +29,8 @@ Die `basis_url` in `generator/teilnehmer.json` muss zu dieser Adresse passen.
 1. `generator/teilnehmer.json` anpassen:
    - `teilnehmer`: alle Namen
    - `ausnahmen`: Paare, die sich nicht ziehen sollen, z. B. `[["Mama", "Papa"]]`
-   - `budget`, `datum`: optional, werden auf den Seiten angezeigt
+   - `budget`, `datum`, `datum_en`: optional, werden auf den Seiten angezeigt
+   - `englisch`: Namen, deren Seite auf Englisch sein soll, z. B. `["Erick"]`
 2. `python3 generator/generate.py` ausführen (nur Python 3, keine Pakete nötig).
 3. Neue Links aus der Ausgabe verschicken – **alte Links funktionieren dann nicht mehr.**
 4. Änderungen committen und pushen.

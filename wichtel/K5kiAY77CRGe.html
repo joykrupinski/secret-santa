@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#0b1430">
-  <title>🎁 Erick, dein Wichtel-Geschenk wartet!</title>
+  <title>🎁 Erick, your Secret Santa gift is waiting!</title>
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Familien-Wichteln 2026">
-  <meta property="og:title" content="🎁 Erick, dein Wichtel-Geschenk wartet!">
-  <meta property="og:description" content="Schüttel das Geschenk und finde heraus, wen du beschenkst. Pssst! 🤫">
-  <meta property="og:image" content="https://joykrupinski.github.io/secret-santa/assets/vorschau.jpg">
+  <meta property="og:site_name" content="Family Secret Santa 2026">
+  <meta property="og:title" content="🎁 Erick, your Secret Santa gift is waiting!">
+  <meta property="og:description" content="Shake the gift to find out who you're buying for. Shhh! 🤫">
+  <meta property="og:image" content="https://joykrupinski.github.io/secret-santa/assets/vorschau-en.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="description" content="Schüttel das Geschenk und finde heraus, wen du beschenkst. Pssst! 🤫">
+  <meta name="description" content="Shake the gift to find out who you're buying for. Shhh! 🤫">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
@@ -47,49 +47,49 @@
     </svg>
   </div>
 
-  <button type="button" class="sound-toggle" id="sound" aria-pressed="true">🔔 Ton an</button>
+  <button type="button" class="sound-toggle" id="sound" aria-pressed="true">🔔 Sound on</button>
 
   <main class="card">
-    <p class="eyebrow">Familien-Wichteln 2026</p>
-    <h1>Hallo Erick! <span aria-hidden="true">🎄</span></h1>
-    <p class="lead" id="lead">Der Weihnachtsmann hat ein Geschenk nur für dich dagelassen.<br>Darin steht, wen <strong>du</strong> dieses Jahr beschenkst!</p>
+    <p class="eyebrow">Family Secret Santa 2026</p>
+    <h1>Hi Erick! <span aria-hidden="true">🎄</span></h1>
+    <p class="lead" id="lead">Santa left a present just for you.<br>Inside is the name of the person <strong>you</strong> are buying for this year!</p>
 
     <div class="stage">
       <div class="glow" aria-hidden="true"></div>
-      <button class="gift" id="gift" type="button" aria-label="Geschenk schütteln und öffnen">
+      <button class="gift" id="gift" type="button" aria-label="Shake and open the gift">
         <span class="lid"><span class="bow"></span></span>
         <span class="box"></span>
-        <span class="tag">für Erick</span>
+        <span class="tag">for Erick</span>
       </button>
 
       <div class="reveal" id="reveal" hidden aria-live="polite">
-        <p class="reveal-label">Du beschenkst</p>
+        <p class="reveal-label">You're buying for</p>
         <p class="reveal-name" id="revealName"></p>
-        <p class="reveal-sub">Ho ho ho – viel Spaß beim Aussuchen! <span aria-hidden="true">🎅</span></p>
+        <p class="reveal-sub">Ho ho ho – have fun picking a gift! <span aria-hidden="true">🎅</span></p>
       </div>
     </div>
 
     <div class="confirm" id="confirm" hidden>
-      <p>Moment! Bist du wirklich <strong>Erick</strong>? <span aria-hidden="true">🧐</span></p>
+      <p>Wait! Are you really <strong>Erick</strong>? <span aria-hidden="true">🧐</span></p>
       <div class="confirm-actions">
-        <button type="button" class="btn btn-primary" id="confirmYes">Ja, ich bin's!</button>
-        <button type="button" class="btn btn-ghost" id="confirmNo">Ups, nein</button>
+        <button type="button" class="btn btn-primary" id="confirmYes">Yes, it's me!</button>
+        <button type="button" class="btn btn-ghost" id="confirmNo">Oops, no</button>
       </div>
     </div>
 
-    <p class="hint" id="hint">Tippe auf das Geschenk, um es zu schütteln! <span aria-hidden="true">👆</span></p>
+    <p class="hint" id="hint">Tap the gift to shake it! <span aria-hidden="true">👆</span></p>
     <p class="mission" id="mission" hidden></p>
     <p class="error" id="error" hidden></p>
 
     <div class="countdown" id="countdown" aria-live="off"></div>
 
     <ul class="infos">
-          <li><span aria-hidden="true">📅</span> Bescherung: <strong>24. Dezember 2026</strong></li>
-          <li><span aria-hidden="true">🤫</span> Pssst – nicht verraten, wen du hast!</li>
+          <li><span aria-hidden="true">📅</span> Gift exchange: <strong>December 24, 2026</strong></li>
+          <li><span aria-hidden="true">🤫</span> Shhh – don't tell anyone who you got!</li>
     </ul>
   </main>
 
-  <footer class="footer">Frohe Weihnachten! <span aria-hidden="true">✨🎄✨</span></footer>
+  <footer class="footer">Merry Christmas! <span aria-hidden="true">✨🎄✨</span></footer>
 
   <script>
     window.WICHTEL = { giver: "Erick", nonce: "EmYNgHhnXgSbcC05", cipher: "Q2p0YmwbfKcjLaUZ" };

@@ -2,6 +2,7 @@
   "basis_url": "https://joykrupinski.github.io/secret-santa/",
   "budget": "",
   "datum": "24. Dezember 2026",
+  "datum_en": "December 24, 2026",
   "teilnehmer": [
     "Mama",
     "Papa",
@@ -11,5 +12,6 @@
     "Ruhama",
     "Joy"
   ],
-  "ausnahmen": []
+  "ausnahmen": [],
+  "englisch": ["Erick"]
 }

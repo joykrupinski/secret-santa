@@ -94,6 +94,40 @@
     return text.slice(8);
   }
 
+  // ---------- Texte (Deutsch / Englisch je nach <html lang>) ----------
+  var EN = (document.documentElement.lang || "").indexOf("en") === 0;
+  var T = EN ? {
+    badKey: "Hmm, this link doesn't look quite right. Please open exactly the link you were sent – including everything after the #.",
+    noKey: "This link is incomplete. Please open exactly the link you were sent – including everything after the #.",
+    soundOn: "🔔 Sound on", soundOff: "🔕 Sound off",
+    shake: ["Shake it again… something's jingling in there! 🔔", "Almost! Shake it one last time! 🤩"],
+    missions: [
+      "Secret mission: wrap your gift so nobody can guess who it's from. 🕵️",
+      "Bonus points for a handwritten card with a little Christmas rhyme! ✍️",
+      "Tip: quietly listen for what they'd love to get – but don't give it away! 👂",
+      "Bonus mission: make the wrapping so festive it's almost too pretty to open. ✨",
+      "Cookie rule: whoever listens to Christmas music while shopping finds the better gift. 🎶"
+    ],
+    drum: "Drumroll… 🥁",
+    decided: "Santa has made his choice …",
+    notMe: function (n) { return "No problem! Then leave this gift for " + n + ". 😉"; }
+  } : {
+    badKey: "Hmm, dieser Link scheint nicht ganz zu stimmen. Öffne bitte genau den Link, den du bekommen hast – inklusive allem nach dem #.",
+    noKey: "Der Link ist unvollständig. Öffne bitte genau den Link, den du bekommen hast – inklusive allem nach dem #.",
+    soundOn: "🔔 Ton an", soundOff: "🔕 Ton aus",
+    shake: ["Schüttel es nochmal… da klimpert was! 🔔", "Fast! Noch ein letztes Mal schütteln! 🤩"],
+    missions: [
+      "Geheime Mission: Verpacke dein Geschenk so, dass niemand errät, von wem es ist. 🕵️",
+      "Extra-Punkte für eine selbstgeschriebene Karte mit einem kleinen Weihnachtsreim! ✍️",
+      "Tipp: Hör mal unauffällig zu, was sich die Person wünscht – aber nicht verraten! 👂",
+      "Bonus-Mission: Mach das Geschenkpapier so festlich, dass es fast zu schade zum Auspacken ist. ✨",
+      "Plätzchen-Regel: Wer beim Aussuchen Weihnachtsmusik hört, findet das bessere Geschenk. 🎶"
+    ],
+    drum: "Trommelwirbel… 🥁",
+    decided: "Das Christkind hat entschieden …",
+    notMe: function (n) { return "Kein Problem! Dann lass das Geschenk lieber für " + n + " liegen. 😉"; }
+  };
+
   // ---------- Elemente ----------
   var data = window.WICHTEL || {};
   var $ = function (id) { return document.getElementById(id); };
@@ -111,8 +145,8 @@
     hint.hidden = true;
     errorBox.hidden = false;
     errorBox.textContent = key
-      ? "Hmm, dieser Link scheint nicht ganz zu stimmen. Öffne bitte genau den Link, den du bekommen hast – inklusive allem nach dem #."
-      : "Der Link ist unvollständig. Öffne bitte genau den Link, den du bekommen hast – inklusive allem nach dem #.";
+      ? T.badKey
+      : T.noKey;
     return;
   }
 
@@ -188,7 +222,7 @@
     soundBtn.addEventListener("click", function () {
       soundOn = !soundOn;
       soundBtn.setAttribute("aria-pressed", String(soundOn));
-      soundBtn.textContent = soundOn ? "🔔 Ton an" : "🔕 Ton aus";
+      soundBtn.textContent = soundOn ? T.soundOn : T.soundOff;
       if (soundOn) bell(1046.5, 0, 0.5, 0.12);
     });
   }
@@ -224,23 +258,14 @@
   // ---------- Ablauf: schütteln → bestätigen → Trommelwirbel → öffnen ----------
   var shakes = 0;
   var needed = 3;
-  var shakeTexts = [
-    "Schüttel es nochmal… da klimpert was! 🔔",
-    "Fast! Noch ein letztes Mal schütteln! 🤩"
-  ];
-  var missions = [
-    "Geheime Mission: Verpacke dein Geschenk so, dass niemand errät, von wem es ist. 🕵️",
-    "Extra-Punkte für eine selbstgeschriebene Karte mit einem kleinen Weihnachtsreim! ✍️",
-    "Tipp: Hör mal unauffällig zu, was sich die Person wünscht – aber nicht verraten! 👂",
-    "Bonus-Mission: Mach das Geschenkpapier so festlich, dass es fast zu schade zum Auspacken ist. ✨",
-    "Plätzchen-Regel: Wer beim Aussuchen Weihnachtsmusik hört, findet das bessere Geschenk. 🎶"
-  ];
+  var shakeTexts = T.shake;
+  var missions = T.missions;
 
   function openGift() {
     confirmBox.hidden = true;
     hint.hidden = false;
     hint.classList.add("drum");
-    hint.textContent = "Trommelwirbel… 🥁";
+    hint.textContent = T.drum;
     gift.classList.add("is-rumble");
     drumroll(1600);
     setTimeout(function () {
@@ -254,7 +279,7 @@
         revealName.textContent = receiver;
         reveal.hidden = false;
         hint.hidden = true;
-        lead.textContent = "Das Christkind hat entschieden …";
+        lead.textContent = T.decided;
         if (mission) {
           mission.textContent = missions[(Math.random() * missions.length) | 0];
           mission.hidden = false;
@@ -291,6 +316,6 @@
     confirmBox.hidden = true;
     hint.hidden = false;
     shakes = 0;
-    hint.textContent = "Kein Problem! Dann lass das Geschenk lieber für " + data.giver + " liegen. 😉";
+    hint.textContent = T.notMe(data.giver);
   });
 })();

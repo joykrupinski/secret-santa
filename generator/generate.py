@@ -24,7 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "generator" / "teilnehmer.json"
-TEMPLATE = ROOT / "generator" / "vorlage.html"
+TEMPLATES = {"de": ROOT / "generator" / "vorlage.html", "en": ROOT / "generator" / "vorlage.en.html"}
 OUT_DIR = ROOT / "wichtel"
 LINKS_FILE = ROOT / "generator" / "links.txt"  # in .gitignore
 
@@ -63,6 +63,35 @@ def draw(names: list[str], blocked: set[frozenset]) -> dict[str, str]:
     raise SystemExit("Keine gültige Auslosung möglich – zu viele Ausnahmen?")
 
 
+def info_items(cfg: dict, lang: str) -> str:
+    budget = cfg.get("budget", "").strip()
+    if lang == "en":
+        datum = cfg.get("datum_en", "").strip() or cfg.get("datum", "").strip()
+        texts = ("Gift exchange", "Budget", "Shhh – don't tell anyone who you got!")
+    else:
+        datum = cfg.get("datum", "").strip()
+        texts = ("Bescherung", "Budget", "Pssst – nicht verraten, wen du hast!")
+    items = []
+    if datum:
+        items.append(f'<li><span aria-hidden="true">📅</span> {texts[0]}: <strong>{html.escape(datum)}</strong></li>')
+    if budget:
+        items.append(f'<li><span aria-hidden="true">💶</span> {texts[1]}: <strong>{html.escape(budget)}</strong></li>')
+    items.append(f'<li><span aria-hidden="true">🤫</span> {texts[2]}</li>')
+    return "\n          ".join(items)
+
+
+def render_page(cfg: dict, lang: str, giver: str, base_url: str, nonce_b64: str, cipher_b64: str) -> str:
+    template = TEMPLATES[lang].read_text(encoding="utf-8")
+    return (
+        template.replace("{{BASE}}", html.escape(base_url))
+        .replace("{{GIVER}}", html.escape(giver))
+        .replace("{{GIVER_JS}}", json.dumps(giver))
+        .replace("{{NONCE}}", nonce_b64)
+        .replace("{{CIPHER}}", cipher_b64)
+        .replace("{{INFOS}}", info_items(cfg, lang))
+    )
+
+
 def main() -> None:
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
     names = [n.strip() for n in cfg["teilnehmer"] if n.strip()]
@@ -80,17 +109,11 @@ def main() -> None:
 
     assignment = draw(names, blocked)
 
-    template = TEMPLATE.read_text(encoding="utf-8")
     base_url = cfg.get("basis_url", "").rstrip("/") + "/"
-    budget = cfg.get("budget", "").strip()
-    datum = cfg.get("datum", "").strip()
-
-    infos = []
-    if datum:
-        infos.append(f'<li><span aria-hidden="true">📅</span> Bescherung: <strong>{html.escape(datum)}</strong></li>')
-    if budget:
-        infos.append(f'<li><span aria-hidden="true">💶</span> Budget: <strong>{html.escape(budget)}</strong></li>')
-    infos.append('<li><span aria-hidden="true">🤫</span> Pssst – nicht verraten, wen du hast!</li>')
+    english = set(cfg.get("englisch", []))
+    unknown = english - set(names)
+    if unknown:
+        raise SystemExit(f"Unbekannter Name in 'englisch': {sorted(unknown)}")
 
     # Alte Seiten entfernen, damit keine veralteten Links übrig bleiben
     OUT_DIR.mkdir(exist_ok=True)
@@ -102,14 +125,8 @@ def main() -> None:
         token = secrets.token_urlsafe(9)
         key = secrets.token_bytes(16)
         nonce_b64, cipher_b64 = encrypt(assignment[giver], key)
-        page = (
-            template.replace("{{BASE}}", html.escape(base_url))
-            .replace("{{GIVER}}", html.escape(giver))
-            .replace("{{GIVER_JS}}", json.dumps(giver))
-            .replace("{{NONCE}}", nonce_b64)
-            .replace("{{CIPHER}}", cipher_b64)
-            .replace("{{INFOS}}", "\n          ".join(infos))
-        )
+        lang = "en" if giver in english else "de"
+        page = render_page(cfg, lang, giver, base_url, nonce_b64, cipher_b64)
         (OUT_DIR / f"{token}.html").write_text(page, encoding="utf-8")
         key_b64 = base64.urlsafe_b64encode(key).decode().rstrip("=")
         lines.append(f"{giver}: {base_url}wichtel/{token}.html#{key_b64}")
